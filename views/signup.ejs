@@ -1,0 +1,35 @@
+<%- include('partials/header', { title: 'Inscription - CryptoFaucet', hideNav: true }) %>
+
+<div class="container-sm">
+  <div class="card">
+    <h1>Créer un compte</h1>
+    <p class="subtitle">Inscrivez-vous pour commencer à réclamer.</p>
+
+    <% if (error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
+    <form method="POST" action="/signup">
+      <label>Nom d'utilisateur</label>
+      <input type="text" name="username" placeholder="ex: crypto_fan42" required minlength="3" maxlength="20">
+
+      <label>Code PIN (6 chiffres minimum)</label>
+      <input type="password" name="pin" inputmode="numeric" placeholder="••••••" required minlength="6">
+
+      <label>Confirmer le PIN</label>
+      <input type="password" name="pin_confirm" inputmode="numeric" placeholder="••••••" required minlength="6">
+
+      <div class="h-captcha" data-sitekey="<%= hcaptchaSitekey %>"></div>
+
+      <button type="submit" class="btn btn-primary">S'inscrire</button>
+    </form>
+
+    <p class="text-center muted mt">
+      Déjà un compte ? <a href="/login" style="color: var(--accent-2)">Se connecter</a>
+    </p>
+  </div>
+</div>
+
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
+<%- include('partials/footer') %>

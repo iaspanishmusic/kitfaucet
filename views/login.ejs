@@ -1,0 +1,32 @@
+<%- include('partials/header', { title: 'Connexion - CryptoFaucet', hideNav: true }) %>
+
+<div class="container-sm">
+  <div class="card">
+    <h1>Connexion</h1>
+    <p class="subtitle">Contente de vous revoir !</p>
+
+    <% if (error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+
+    <form method="POST" action="/login">
+      <label>Nom d'utilisateur</label>
+      <input type="text" name="username" required>
+
+      <label>Code PIN</label>
+      <input type="password" name="pin" inputmode="numeric" required>
+
+      <div class="h-captcha" data-sitekey="<%= hcaptchaSitekey %>"></div>
+
+      <button type="submit" class="btn btn-primary">Se connecter</button>
+    </form>
+
+    <p class="text-center muted mt">
+      Pas encore de compte ? <a href="/signup" style="color: var(--accent-2)">S'inscrire</a>
+    </p>
+  </div>
+</div>
+
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+
+<%- include('partials/footer') %>

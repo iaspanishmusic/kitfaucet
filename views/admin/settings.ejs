@@ -1,0 +1,31 @@
+<%- include('layout-header', { active: 'settings' }) %>
+
+<h1>Réglages</h1>
+<p class="subtitle">Modifiez le comportement du faucet sans redémarrer le serveur.</p>
+
+<% if (saved) { %>
+  <div class="alert alert-success">Réglages enregistrés avec succès.</div>
+<% } %>
+
+<div class="card">
+  <form method="POST" action="/admin/settings">
+    <label>Nom du site</label>
+    <input type="text" name="site_name" value="<%= settings.site_name %>">
+
+    <label>Libellé de la monnaie (ex: points, satoshis)</label>
+    <input type="text" name="currency_label" value="<%= settings.currency_label %>">
+
+    <label>Montant par réclamation</label>
+    <input type="number" step="any" name="claim_amount" value="<%= settings.claim_amount %>">
+
+    <label>Cooldown entre réclamations (en secondes)</label>
+    <input type="number" name="claim_cooldown_seconds" value="<%= settings.claim_cooldown_seconds %>">
+
+    <label>Retrait minimum</label>
+    <input type="number" step="any" name="min_withdraw" value="<%= settings.min_withdraw %>">
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+  </form>
+</div>
+
+<%- include('layout-footer') %>

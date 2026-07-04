@@ -1,0 +1,36 @@
+<%- include('partials/header', { title: siteName, user }) %>
+
+<div class="container">
+  <div class="card ad-slot banner">Emplacement publicité — bannière haut de page (728x90)</div>
+
+  <div class="card balance-hero">
+    <div class="label">Votre solde</div>
+    <div class="amount"><%= user.balance %></div>
+    <div class="label"><%= currencyLabel %></div>
+  </div>
+
+  <div class="card text-center">
+    <h2>Prêt à réclamer votre prochaine récompense ?</h2>
+    <p class="subtitle">Cliquez ci-dessous pour accéder à la page de réclamation.</p>
+    <a href="/claim" class="btn btn-primary" style="max-width:280px;margin:0 auto;display:block;">
+      🚰 Aller à la réclamation
+    </a>
+  </div>
+
+  <div class="ad-slot large">Emplacement publicité — grand format (300x250 ou 336x280)</div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="label">Nom d'utilisateur</div>
+      <div class="value"><%= user.username %></div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Membre depuis</div>
+      <div class="value"><%= new Date(user.created_at).toLocaleDateString('fr-FR') %></div>
+    </div>
+  </div>
+
+  <div class="ad-slot banner">Emplacement publicité — bannière bas de page</div>
+</div>
+
+<%- include('partials/footer') %>

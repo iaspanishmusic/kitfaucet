@@ -1,0 +1,36 @@
+<%- include('layout-header', { active: 'withdrawals' }) %>
+
+<h1>Retraits</h1>
+<p class="subtitle">Historique des demandes de retrait envoyées via FaucetPay.</p>
+
+<div class="card">
+  <table>
+    <thead>
+      <tr><th>Utilisateur</th><th>Montant</th><th>Email FaucetPay</th><th>Statut</th><th>Date</th></tr>
+    </thead>
+    <tbody>
+      <% withdrawals.forEach(w => { %>
+        <tr>
+          <td><%= w.username %></td>
+          <td><%= w.amount %> <%= currencyLabel %></td>
+          <td class="muted"><%= w.faucetpay_email %></td>
+          <td>
+            <% if (w.status === 'completed') { %>
+              <span class="badge badge-success">Complété</span>
+            <% } else if (w.status === 'failed') { %>
+              <span class="badge badge-danger">Échoué</span>
+            <% } else { %>
+              <span class="badge badge-warning">En attente</span>
+            <% } %>
+          </td>
+          <td class="muted"><%= new Date(w.created_at).toLocaleString('fr-FR') %></td>
+        </tr>
+      <% }) %>
+      <% if (withdrawals.length === 0) { %>
+        <tr><td colspan="5" class="muted text-center">Aucun retrait pour le moment.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('layout-footer') %>

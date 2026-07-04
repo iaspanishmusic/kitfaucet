@@ -1,0 +1,73 @@
+<%- include('layout-header', { active: 'users' }) %>
+
+<h1>Utilisateurs</h1>
+<p class="subtitle">Gérez les comptes, soldes et bannissements.</p>
+
+<div class="card">
+  <form method="GET" action="/admin/users" style="display:flex; gap:10px;">
+    <input type="text" name="search" placeholder="Rechercher un nom d'utilisateur..." value="<%= search %>" style="margin-bottom:0;">
+    <button type="submit" class="btn btn-secondary btn-sm">Chercher</button>
+  </form>
+</div>
+
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Utilisateur</th>
+        <th>Solde</th>
+        <th>Statut</th>
+        <th>Inscrit le</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(u => { %>
+        <tr>
+          <td>
+            <%= u.username %>
+            <% if (u.is_admin) { %><span class="badge badge-warning">admin</span><% } %>
+          </td>
+          <td>
+            <form method="POST" action="/admin/users/<%= u.id %>/balance" style="display:flex; gap:6px; align-items:center;">
+              <input type="number" step="any" name="balance" value="<%= u.balance %>" style="width:100px; margin-bottom:0; padding:6px 8px;">
+              <button type="submit" class="btn btn-secondary btn-sm">💾</button>
+            </form>
+          </td>
+          <td>
+            <% if (u.is_banned) { %>
+              <span class="badge badge-danger">Banni</span>
+            <% } else { %>
+              <span class="badge badge-success">Actif</span>
+            <% } %>
+          </td>
+          <td class="muted"><%= new Date(u.created_at).toLocaleDateString('fr-FR') %></td>
+          <td>
+            <% if (u.is_banned) { %>
+              <form class="inline-form" method="POST" action="/admin/users/<%= u.id %>/unban">
+                <button type="submit" class="btn btn-success btn-sm">Débannir</button>
+              </form>
+            <% } else { %>
+              <form class="inline-form" method="POST" action="/admin/users/<%= u.id %>/ban">
+                <button type="submit" class="btn btn-danger btn-sm">Bannir</button>
+              </form>
+            <% } %>
+            <% if (!u.is_admin) { %>
+              <form class="inline-form" method="POST" action="/admin/users/<%= u.id %>/make-admin">
+                <button type="submit" class="btn btn-secondary btn-sm">Promouvoir</button>
+              </form>
+            <% } %>
+            <form class="inline-form" method="POST" action="/admin/users/<%= u.id %>/delete" onsubmit="return confirm('Supprimer définitivement ce compte ?');">
+              <button type="submit" class="btn btn-danger btn-sm">🗑</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+      <% if (users.length === 0) { %>
+        <tr><td colspan="5" class="muted text-center">Aucun utilisateur trouvé.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('layout-footer') %>
