@@ -1,0 +1,27 @@
+<%- include('partials/header', { title: 'Retirer - CryptoFaucet', user }) %>
+
+<div class="container">
+  <div class="card">
+    <h1>💸 Retirer vos gains</h1>
+    <p class="subtitle">Solde disponible : <strong><%= user.balance %> <%= currencyLabel %></strong> · Minimum : <%= minWithdraw %></p>
+
+    <% if (error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+    <% if (success) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+
+    <form method="POST" action="/withdraw">
+      <label>Email FaucetPay</label>
+      <input type="email" name="faucetpay_email" placeholder="votre@email.com" required>
+
+      <label>Montant à retirer</label>
+      <input type="number" name="amount" step="any" min="<%= minWithdraw %>" max="<%= user.balance %>" required>
+
+      <button type="submit" class="btn btn-primary">Envoyer la demande</button>
+    </form>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,47 @@
+<%- include('layout-header', { active: 'dashboard' }) %>
+
+<h1>Dashboard</h1>
+<p class="subtitle">Vue d'ensemble du faucet.</p>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="label">Utilisateurs</div>
+    <div class="value"><%= totalUsers %></div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Total distribué</div>
+    <div class="value accent"><%= totalDistributed %> <%= currencyLabel %></div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Réclamations (24h)</div>
+    <div class="value"><%= claimsToday %></div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Retraits en attente</div>
+    <div class="value"><%= pendingWithdrawals %></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Réclamations récentes</h2>
+  <table>
+    <thead>
+      <tr><th>Utilisateur</th><th>Montant</th><th>IP</th><th>Date</th></tr>
+    </thead>
+    <tbody>
+      <% recentClaims.forEach(c => { %>
+        <tr>
+          <td><%= c.username %></td>
+          <td><%= c.amount %> <%= currencyLabel %></td>
+          <td class="muted"><%= c.ip_address %></td>
+          <td class="muted"><%= new Date(c.created_at).toLocaleString('fr-FR') %></td>
+        </tr>
+      <% }) %>
+      <% if (recentClaims.length === 0) { %>
+        <tr><td colspan="4" class="muted text-center">Aucune réclamation pour le moment.</td></tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('layout-footer') %>

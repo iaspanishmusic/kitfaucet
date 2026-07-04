@@ -1,0 +1,50 @@
+<%- include('partials/header', { title: 'Réclamer - CryptoFaucet', user }) %>
+
+<div class="container">
+  <div class="ad-slot banner">Emplacement publicité — bannière haut de page</div>
+
+  <div class="card">
+    <h1 class="text-center">🚰 Page de réclamation</h1>
+    <p class="subtitle text-center">Complétez le captcha puis cliquez sur le bouton pour recevoir <%= claimAmount %> <%= currencyLabel %>.</p>
+
+    <% if (error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
+    <% if (success) { %>
+      <div class="alert alert-success"><%= success %></div>
+    <% } %>
+
+    <div class="ad-slot large">Emplacement publicité — au centre de la page (le meilleur emplacement pour la visibilité)</div>
+
+    <% if (canClaim) { %>
+      <form method="POST" action="/claim">
+        <div class="h-captcha" data-sitekey="<%= hcaptchaSitekey %>"></div>
+        <button type="submit" class="btn btn-primary">💰 Réclamer maintenant</button>
+      </form>
+    <% } else { %>
+      <div class="timer" id="countdown" data-seconds="<%= secondsLeft %>"></div>
+      <button class="btn btn-primary" disabled>Prochaine réclamation dans le minuteur ci-dessus</button>
+    <% } %>
+
+    <div class="ad-slot banner mt">Emplacement publicité — sous le bouton</div>
+  </div>
+</div>
+
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+<script>
+  const el = document.getElementById('countdown');
+  if (el) {
+    let s = parseInt(el.dataset.seconds, 10);
+    function tick() {
+      if (s <= 0) { location.reload(); return; }
+      const m = Math.floor(s / 60);
+      const sec = s % 60;
+      el.textContent = `${m}m ${sec}s avant la prochaine réclamation`;
+      s--;
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+</script>
+
+<%- include('partials/footer') %>

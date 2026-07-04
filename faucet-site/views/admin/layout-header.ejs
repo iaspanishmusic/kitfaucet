@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - CryptoFaucet</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="admin-layout">
+  <div class="admin-sidebar">
+    <div class="logo">⚙️ Admin</div>
+    <a href="/admin" class="<%= typeof active !== 'undefined' && active === 'dashboard' ? 'active' : '' %>">📊 Dashboard</a>
+    <a href="/admin/users" class="<%= typeof active !== 'undefined' && active === 'users' ? 'active' : '' %>">👤 Utilisateurs</a>
+    <a href="/admin/withdrawals" class="<%= typeof active !== 'undefined' && active === 'withdrawals' ? 'active' : '' %>">💸 Retraits</a>
+    <a href="/admin/settings" class="<%= typeof active !== 'undefined' && active === 'settings' ? 'active' : '' %>">🔧 Réglages</a>
+    <a href="/">🌐 Voir le site</a>
+    <form action="/logout" method="POST"><button type="submit" class="btn btn-secondary btn-sm mt" style="width:100%">Déconnexion</button></form>
+  </div>
+  <div class="admin-main">

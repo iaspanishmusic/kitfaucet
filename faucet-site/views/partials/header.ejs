@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'CryptoFaucet' %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<% if (typeof hideNav === 'undefined' || !hideNav) { %>
+<div class="navbar">
+  <a class="logo" href="/">⚡ CryptoFaucet</a>
+  <% if (typeof user !== 'undefined' && user) { %>
+    <nav>
+      <a href="/">Accueil</a>
+      <a href="/claim">Réclamer</a>
+      <a href="/withdraw">Retirer</a>
+      <form class="inline-form" action="/logout" method="POST" style="display:inline">
+        <a href="#" onclick="this.closest('form').submit(); return false;">Déconnexion</a>
+      </form>
+    </nav>
+  <% } %>
+</div>
+<% } %>
