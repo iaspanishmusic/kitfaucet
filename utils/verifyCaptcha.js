@@ -1,7 +1,9 @@
 ﻿const fetch = require('node-fetch');
 
 async function verifyCaptcha(token, remoteip) {
-  if (!token) return false;
+  if (!token) {
+    return { success: false, reason: 'Aucun token reçu (captcha non coché ou script bloqué).' };
+  }
 
   const params = new URLSearchParams();
   params.append('secret', process.env.HCAPTCHA_SECRET);
@@ -16,12 +18,11 @@ async function verifyCaptcha(token, remoteip) {
     });
     const data = await res.json();
     if (!data.success) {
-      console.log('hCaptcha verification failed:', JSON.stringify(data));
+      return { success: false, reason: JSON.stringify(data) };
     }
-    return data.success === true;
+    return { success: true };
   } catch (err) {
-    console.error('Erreur vérification hCaptcha:', err);
-    return false;
+    return { success: false, reason: 'Erreur réseau: ' + err.message };
   }
 }
 

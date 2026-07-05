@@ -51,9 +51,9 @@ router.post('/signup', redirectIfAuth, async (req, res) => {
     return renderError('Les codes PIN ne correspondent pas.');
   }
 
-  const captchaOk = await verifyCaptcha(captchaToken, req.ip);
-  if (!captchaOk) {
-    return renderError('Vérification captcha échouée. Réessayez.');
+  const captchaResult = await verifyCaptcha(captchaToken, req.ip);
+  if (!captchaResult.success) {
+    return renderError('DEBUG CAPTCHA: ' + captchaResult.reason);
   }
 
   const existing = db.prepare('SELECT id FROM users WHERE username = ?').get(cleanUsername);
@@ -89,9 +89,9 @@ router.post('/login', redirectIfAuth, async (req, res) => {
     return renderError('Tous les champs sont requis.');
   }
 
-  const captchaOk = await verifyCaptcha(captchaToken, req.ip);
-  if (!captchaOk) {
-    return renderError('Vérification captcha échouée. Réessayez.');
+  const captchaResult = await verifyCaptcha(captchaToken, req.ip);
+  if (!captchaResult.success) {
+    return renderError('DEBUG CAPTCHA: ' + captchaResult.reason);
   }
 
   const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username.trim());
