@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+﻿const fetch = require('node-fetch');
 
 async function verifyCaptcha(token, remoteip) {
   if (!token) return false;
